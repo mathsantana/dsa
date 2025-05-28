@@ -10,35 +10,40 @@ class EmptyListNode(LinkedListNode):
         super().__init__(None)
         
 class LinkedList:
-    def __init__(self, first = None):
-        self.first = EmptyListNode() if first == None else first
+    def __init__(self):
+        self.first = EmptyListNode()
 
-    def addFirst(self, node):
+    def addFirst(self, value):
+        node = LinkedListNode(value)
         node.next = self.first
         self.first = node
 
     def isEmpty(self):
         return isinstance(self.first, EmptyListNode)
 
-    def addLast(self, node):
+    def addLast(self, value):
+        node = LinkedListNode(value)
         n = self.first
 
         if self.isEmpty():
             node.next = self.first
-            self.first = node.next
-
-        while True:
-            if (isinstance(n.next, EmptyListNode)):
-                node.next = n.next
-                n.next = node
-                break
-            n = n.next
+            self.first = node
+        else:
+            while True:
+                if (isinstance(n.next, EmptyListNode)):
+                    node.next = n.next
+                    n.next = node
+                    break
+                n = n.next
 
     def pop(self):
         if (self.isEmpty()):
             raise ReferenceError("List is empty!")
         
+        node = self.first
         self.first = self.first.next
+
+        return node.value
 
         
     def __str__(self):
@@ -61,12 +66,11 @@ class LinkedList:
 if __name__ == "__main__":
     lst = LinkedList()
     print(lst)
-    node = LinkedListNode("Matheus")
-    lst.addFirst(node)
+    lst.addFirst("Matheus")
     print(lst)
-    lst.addFirst(LinkedListNode("Catarina"))
+    lst.addFirst("Catarina")
     print(lst)
-    lst.addLast(LinkedListNode("Stephane"))
+    lst.addLast("Stephane")
     print(lst)
     lst.pop()
     print(lst)
